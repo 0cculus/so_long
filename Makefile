@@ -6,7 +6,7 @@
 #    By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 09:40:08 by brheaume          #+#    #+#              #
-#    Updated: 2023/04/14 11:00:45 by brheaume         ###   ########.fr        #
+#    Updated: 2023/04/24 09:58:58 by brheaume         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = main.c \
 	  load.c \
 	  error.c \
 	  utils.c \
-	  verify.c
+	  verify.c \
+	  update.c
 
 OBJ = ${SRC:.c=.o}
 
