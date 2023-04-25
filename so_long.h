@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:57:50 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/14 14:58:08 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:12:22 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,17 @@
 # ifndef SPRITE_SIZE
 #  define SPRITE_SIZE 60
 # endif
+# ifndef ERROR_OUTPUT
+#  define ERROR_OUTPUT 2
+# endif
+# ifndef TERM_OUTPUT
+#  define TERM_OUTPUT 1
+# endif
+# ifndef BONUS
+#  define BONUS 0
+# endif
 
-#  define MOVE 60
+# define MOVE 60
 # define RIGHT 1
 # define LEFT -1
 # define UP -1
@@ -31,6 +40,8 @@
 
 # define MAP_EXT ".ber"
 # define MAP_EXT_SIZE 4
+# define MAP_HEIGHT_MAX 22
+# define MAP_WIDTH_MAX 42
 
 # define WALL_VAL '1'
 # define FLOOR_VAL '0'
@@ -43,14 +54,11 @@
 # define BASE_MAP_PATH "./maps/base.ber"
 # define FLOOR "./assets/floor.png"
 # define WALL "./assets/wall.png"
-# define COLLECT "./assets/collection.png"
+# define COLLECT "./assets/collectible.png"
 # define HERO "./assets/frog.png"
 # define EXIT_CLOSED "./assets/computer_closed.png"
 # define EXIT_OPEN "./assets/computer_open_exit.png"
 # define ENEMY "./assets/enemy.png"
-
-# define WIDTH 1024
-# define HEIGHT 512
 
 typedef struct s_img
 {
@@ -65,23 +73,38 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	mlx_t	mlx;
+	mlx_t	*mlx;
 	t_img	images;
-	int		x_hero;
-	int		y_hero;
+	int		score;
+	int		x_exit;
+	int		y_exit;
 	int		is_open;
 	int		nb_moves;
 	int		nb_collect;
+	char	**map;
 }	t_data;
 
-int		ft_arraylen(char **src);
-int		ft_verify_str(char *src);
-int		ft_verify_walls(char **src, int x_max, int y_max);
-void	ft_cleararray(char **src);
-void	ft_draw(t_data game, int x, int y, mlx_image_t img);
-void	ft_draw_superimposed(t_data game, int x, int y, mlx_image_t img);
-void	ft_draw_terrain(t_data game, int x, int y, mlx_image_t img);
-char	**ft_loadmap(char *path);
-char	**ft_arrayjoin(char **src, char *s);
+int			ft_arraylen(char **src);
+int			ft_get_width(char **map);
+int			ft_verify_str(char *src);
+int			ft_verify_map(char **map);
+int			ft_get_height(char **map);
+int			ft_verify_walls(char **src);
+int			ft_count_collectible(t_data *game);
+
+void		ft_error_path(void);
+void		ft_error_map(char **map);
+void		ft_map_draw(t_data *game);
+void		ft_error_game(t_data *game);
+void		*ft_clear_array(char **src);
+void		ft_redraw_collect(t_data *game);
+void		ft_error_interrupt(t_data *game);
+void		ft_move_vert(t_data *game, int direction);
+void		ft_move_horiz(t_data *game, int direction);
+void		ft_draw_superimposed(t_data *game, int x, int y, mlx_image_t *mlx);
+
+char		**ft_loadmap(char *path);
+char		**ft_arrayjoin(char **src, char *s);
+mlx_image_t	*ft_texture_load(mlx_t *mlx, char *path);
 
 #endif
