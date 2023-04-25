@@ -6,81 +6,76 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:39:25 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/14 09:45:41 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:06:43 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static t_img	ft_init_imgs(mlx_t *mlx)
+static void	ft_init_images(t_data *game)
 {
-	t_img	imgs;
-
-	imgs.wall = ft_texture_load(mlx, WALL);
-	imgs.hero = ft_texture_load(mlx, HERO);
-	imgs.floor = ft_texture_load(mlx, FLOOR);
-	imgs.enemy = ft_texture_load(mlx, ENEMY);
-	imgs.collect = ft_texture_load(mlx, COLLECT);
-	imgs.exit_open = ft_texture_load(mlx, EXIT_OPEN);
-	imgs.exit_close = ft_texture_load(mlx, EXIT_CLOSED);
-	return (imgs);
+	game->images.wall = ft_texture_load(game->mlx, WALL);
+	game->images.hero = ft_texture_load(game->mlx, HERO);
+	game->images.floor = ft_texture_load(game->mlx, FLOOR);
+	game->images.enemy = ft_texture_load(game->mlx, ENEMY);
+	game->images.collect = ft_texture_load(game->mlx, COLLECT);
+	game->images.exit_open = ft_texture_load(game->mlx, EXIT_OPEN);
+	game->images.exit_close = ft_texture_load(game->mlx, EXIT_CLOSED);
 }
 
-static t_data	ft_init_game(int width, int height)
+static void	ft_init_game(t_data *game, int width, int height)
 {
-	t_data	game;
-
-	game.x_hero = 0;
-	game.y_hero = 0;
-	game.is_open = 0;
-	game.nb_moves = 0;
-	game.nb_collect = 0;
-	game.mlx = mlx_init(width height, "Frog: The Return of Minitalk", false);
-	game.images = ft_init_imgs(&game.mlx);
-	return (game);
+	game->score = 0;
+	game->is_open = 0;
+	game->nb_moves = 0;
+	game->nb_collect = 0;
+	game->mlx = mlx_init(width * SPRITE_SIZE, height * SPRITE_SIZE,
+			"Frog: The Return of Minitalk", false);
+	ft_init_images(game);
 }
 
-static void	ft_hook(void* param)
+static void	ft_hook(mlx_key_data_t keydata, void *param)
 {
 	t_data	*game;
 
 	game = param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
-		|| mlx_is_key_down(mlx, MLX_KEY_Q))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP)
-		|| mlx_is_key_down(mlx, MLX_KEY_W))
-		ft_movevert(game->images.hero->instances[0].y, UP);
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN)
-		|| mlx_is_key_down(mlx, MLX_KEY_S))
-		ft_movevert(game->images.hero->instances[0].y, DOWN);
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT)
-		|| mlx_is_key_down(mlx, MLX_KEY_A))
-		ft_movehoriz(game->images.hero->instances[0].y, LEFT);
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT)
-		|| mlx_is_key_down(mlx, MLX_KEY_D))
-		ft_movehoriz(game->images.hero->instances[0].y, RIGHT);
+	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	{
+		if (keydata.key == MLX_KEY_ESCAPE || keydata.key == MLX_KEY_Q)
+			ft_error_interrupt(game);
+		else if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
+			ft_move_vert(game, UP);
+		else if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
+			ft_move_vert(game, DOWN);
+		else if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
+			ft_move_horiz(game, LEFT);
+		else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+			ft_move_horiz(game, RIGHT);
+	}
 }
 
 int	main(int ac, char **av)
 {
 	static t_data	game;
 	char			**map;
-	
+
 	if (ac != 2)
 		map = ft_loadmap("maps/base.ber");
 	else
 	{
-		if (ft_verifystr(av[1]))
+		if (ft_verify_str(av[1]))
 			map = ft_loadmap(av[1]);
 		else
-			return (ft_error_path("Bad map path\n"));
+			ft_error_path();
 	}
-	game = ft_init_game(ft_get_width(map), ft_get_height(map));
-	if (!game)
-		return (ft_error_game("Game failed\n"));
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	//if (ft_verify_map(map))
+	//	ft_error_map(map);
+	ft_init_game(&game, ft_get_width(map) - 1, ft_get_height(map));
+	game.map = map;
+	game.nb_collect = ft_count_collectible(&game);
+	ft_map_draw(&game);
+	mlx_key_hook(game.mlx, ft_hook, &game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	return (EXIT_SUCCESS);
 }
