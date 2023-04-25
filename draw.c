@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:18:21 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 13:39:18 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:57:51 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	ft_map_draw(t_data *game)
 {
 	int	x;
 	int	y;
-	int	x_hero;
-	int	y_hero;
 
 	y = 0;
 	while (game->map[y])
@@ -56,8 +54,8 @@ void	ft_map_draw(t_data *game)
 		{
 			if (game->map[y][x] == HERO_VAL)
 			{
-				x_hero = x;
-				y_hero = y;
+				game->x_hero = x;
+				game->y_hero = y;
 				ft_draw_nonconcurrent(game, x, y, game->images.floor);
 			}
 			else
@@ -66,7 +64,10 @@ void	ft_map_draw(t_data *game)
 		}
 		y++;
 	}
-	ft_draw_nonconcurrent(game, x_hero, y_hero, game->images.hero);
+	if (BONUS)
+		game->images.count = mlx_put_string(game->mlx, "0", \
+			ft_get_width(game->map) * SPRITE_SIZE * 0.3, 21);
+	ft_draw_nonconcurrent(game, game->x_hero, game->y_hero, game->images.hero);
 }
 
 void	ft_redraw_collect(t_data *game)

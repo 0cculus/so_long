@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:03:24 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 13:18:26 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:02:39 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	**ft_loadmap(char *path)
 	char	*added;
 	int		ffs;
 
+	ffs = open(path, O_RDONLY);
+	if (ffs < 0)
+		ft_error_path();
 	if (path)
 	{
-		ffs = open(path, O_RDONLY);
-		if (ffs < 0)
-			ft_error_path();
 		res = NULL;
 		added = get_next_line(ffs);
 		while (added)
@@ -48,4 +48,26 @@ char	**ft_loadmap(char *path)
 		return (res);
 	}
 	return (NULL);
+}
+
+int	ft_count_collectible(char **map)
+{
+	int	y;
+	int	x;
+	int	collect_nb;
+
+	y = 0;
+	collect_nb = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == COLLECT_VAL)
+				collect_nb++;
+			x++;
+		}
+		y++;
+	}
+	return (collect_nb);
 }

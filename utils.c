@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:54:10 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/24 14:42:50 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:11:08 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*ft_clear_array(char **src)
 
 int	ft_get_width(char **map)
 {
-	return (ft_strlen(map[FIRST_INDEX]));
+	return (ft_strlen(map[FIRST_INDEX]) - 1);
 }
 
 int	ft_get_height(char **map)

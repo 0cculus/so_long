@@ -6,7 +6,7 @@
 #    By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 09:40:08 by brheaume          #+#    #+#              #
-#    Updated: 2023/04/24 09:58:58 by brheaume         ###   ########.fr        #
+#    Updated: 2023/04/25 15:42:05 by brheaume         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,10 @@ fclean: clean
 
 libft:
 	$(MAKE) -C $(LIBDIR)
+
+bonus: CFLAGS += -D BONUS
+bonus: re
+
 
 re: fclean all
 

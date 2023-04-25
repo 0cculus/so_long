@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:23:05 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 10:36:56 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:53:33 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	ft_print_moves(t_data *game)
 {
+	char	*moves;
+
 	if (!BONUS)
 	{
 		ft_putnbr_fd(game->nb_moves, TERM_OUTPUT);
@@ -21,6 +23,11 @@ static void	ft_print_moves(t_data *game)
 	}
 	else
 	{
+		mlx_delete_image(game->mlx, game->images.count);
+		moves = ft_itoa(game->nb_moves);
+		game->images.count = mlx_put_string(game->mlx, moves, \
+				ft_get_width(game->map) * SPRITE_SIZE * 0.3, 21);
+		moves = ft_xfree(moves);
 	}
 }
 

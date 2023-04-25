@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:39:25 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 13:06:43 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:46:43 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ int	main(int ac, char **av)
 		else
 			ft_error_path();
 	}
-	//if (ft_verify_map(map))
-	//	ft_error_map(map);
-	ft_init_game(&game, ft_get_width(map) - 1, ft_get_height(map));
+	if (!ft_verify_map(map))
+		ft_error_map(map);
+	ft_init_game(&game, ft_get_width(map), ft_get_height(map));
 	game.map = map;
-	game.nb_collect = ft_count_collectible(&game);
+	game.nb_collect = ft_count_collectible(map);
 	ft_map_draw(&game);
 	mlx_key_hook(game.mlx, ft_hook, &game);
 	mlx_loop(game.mlx);

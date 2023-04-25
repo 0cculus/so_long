@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:57:50 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 13:12:22 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:57:02 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_img
 {
 	mlx_image_t	*wall;
 	mlx_image_t	*hero;
+	mlx_image_t	*count;
 	mlx_image_t	*floor;
 	mlx_image_t	*enemy;
 	mlx_image_t	*collect;
@@ -76,6 +77,8 @@ typedef struct s_data
 	mlx_t	*mlx;
 	t_img	images;
 	int		score;
+	int		x_hero;
+	int		y_hero;
 	int		x_exit;
 	int		y_exit;
 	int		is_open;
@@ -90,7 +93,7 @@ int			ft_verify_str(char *src);
 int			ft_verify_map(char **map);
 int			ft_get_height(char **map);
 int			ft_verify_walls(char **src);
-int			ft_count_collectible(t_data *game);
+int			ft_count_collectible(char **map);
 
 void		ft_error_path(void);
 void		ft_error_map(char **map);
@@ -105,6 +108,7 @@ void		ft_draw_superimposed(t_data *game, int x, int y, mlx_image_t *mlx);
 
 char		**ft_loadmap(char *path);
 char		**ft_arrayjoin(char **src, char *s);
+
 mlx_image_t	*ft_texture_load(mlx_t *mlx, char *path);
 
 #endif

@@ -6,33 +6,11 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:30:43 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 13:48:14 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:00:43 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	ft_count_collectible(t_data *game)
-{
-	int	y;
-	int	x;
-	int	collect_nb;
-
-	y = 0;
-	collect_nb = 0;
-	while (game->map[y])
-	{
-		x = 0;
-		while (game->map[y][x])
-		{
-			if (game->map[y][x] == COLLECT_VAL)
-				collect_nb++;
-			x++;
-		}
-		y++;
-	}
-	return (collect_nb);
-}
 
 int	ft_verify_str(char *src)
 {
@@ -55,8 +33,8 @@ int	ft_verify_walls(char **map)
 
 	x = -1;
 	y = -1;
-	x_max = ft_get_width(map);
-	y_max = ft_get_height(map);
+	x_max = ft_get_width(map) - 1;
+	y_max = ft_get_height(map) - 1;
 	while (++x < x_max)
 		if (map[FIRST_INDEX][x] != WALL_VAL)
 			return (INCORRECT);
@@ -82,7 +60,7 @@ int	ft_verify_maplength(char **map)
 	i = 0;
 	while (map[i])
 	{
-		len = ft_strlen(map[i]);
+		len = ft_strlen(map[i]) - 1;
 		if (i > MAP_HEIGHT_MAX)
 			return (INCORRECT);
 		if (len > MAP_WIDTH_MAX)
