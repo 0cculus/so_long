@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:39:25 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 15:46:43 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:20:18 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,16 @@ int	main(int ac, char **av)
 	static t_data	game;
 	char			**map;
 
+	if (ac > 2)
+		ft_error_simple("Invalid number of arguments");
 	if (ac != 2)
-		map = ft_loadmap("maps/base.ber");
+		map = ft_loadmap(BASE_MAP_PATH);
 	else
 	{
 		if (ft_verify_str(av[1]))
 			map = ft_loadmap(av[1]);
 		else
-			ft_error_path();
+			ft_error_simple("Invalid map path");
 	}
 	if (!ft_verify_map(map))
 		ft_error_map(map);
