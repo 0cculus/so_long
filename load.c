@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:03:24 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 16:02:39 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:22:05 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_loadmap(char *path)
 
 	ffs = open(path, O_RDONLY);
 	if (ffs < 0)
-		ft_error_path();
+		ft_error_simple("Invalid file");
 	if (path)
 	{
 		res = NULL;
