@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:57:50 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 15:57:02 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:20:47 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 # define HERO_VAL 'P'
 # define EXIT_CLOSED_VAL 'E'
 # define EXIT_OPEN_VAL 'O'
-# define ENEMY_VAL 'K'
 
 # define BASE_MAP_PATH "./maps/base.ber"
 # define FLOOR "./assets/floor.png"
@@ -59,6 +58,20 @@
 # define EXIT_CLOSED "./assets/computer_closed.png"
 # define EXIT_OPEN "./assets/computer_open_exit.png"
 # define ENEMY "./assets/enemy.png"
+
+typedef struct s_pos
+{
+	int	x;
+	int	y;
+}	t_pos;
+
+typedef struct s_verify
+{
+	int		hero_count;
+	int		exit_count;
+	int		collect_count;
+	char	**map;
+}	t_verify;
 
 typedef struct s_img
 {
@@ -87,6 +100,7 @@ typedef struct s_data
 	char	**map;
 }	t_data;
 
+int			ft_valid_value(char c);
 int			ft_arraylen(char **src);
 int			ft_get_width(char **map);
 int			ft_verify_str(char *src);
@@ -95,19 +109,23 @@ int			ft_get_height(char **map);
 int			ft_verify_walls(char **src);
 int			ft_count_collectible(char **map);
 
-void		ft_error_path(void);
 void		ft_error_map(char **map);
 void		ft_map_draw(t_data *game);
 void		ft_error_game(t_data *game);
 void		*ft_clear_array(char **src);
+void		ft_error_simple(char *message);
 void		ft_redraw_collect(t_data *game);
 void		ft_error_interrupt(t_data *game);
 void		ft_move_vert(t_data *game, int direction);
 void		ft_move_horiz(t_data *game, int direction);
+void		ft_flood_fill(t_verify *verif, int x, int y);
 void		ft_draw_superimposed(t_data *game, int x, int y, mlx_image_t *mlx);
 
 char		**ft_loadmap(char *path);
+char		**ft_array_copy(char **src);
 char		**ft_arrayjoin(char **src, char *s);
+
+t_pos		ft_find_hero(char **map);
 
 mlx_image_t	*ft_texture_load(mlx_t *mlx, char *path);
 
