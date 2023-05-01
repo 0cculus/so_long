@@ -6,7 +6,7 @@
 #    By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 09:40:08 by brheaume          #+#    #+#              #
-#    Updated: 2023/04/25 15:42:05 by brheaume         ###   ########.fr        #
+#    Updated: 2023/04/28 10:17:00 by brheaume         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRC = main.c \
 	  error.c \
 	  utils.c \
 	  verify.c \
-	  update.c
+	  update.c \
+	  explore.c \
+	  dimension.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -51,6 +53,10 @@ libft:
 bonus: CFLAGS += -D BONUS
 bonus: re
 
+meme: mem
+
+mem: 
+	leaks --atExit -- ./so_long
 
 re: fclean all
 
