@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:54:10 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 14:11:08 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:40:31 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ void	*ft_clear_array(char **src)
 	return (NULL);
 }
 
-int	ft_get_width(char **map)
+int	ft_valid_value(char c)
 {
-	return (ft_strlen(map[FIRST_INDEX]) - 1);
-}
-
-int	ft_get_height(char **map)
-{
-	return (ft_arraylen(map));
+	if (c != HERO_VAL && c != FLOOR_VAL && c != WALL_VAL
+		&& c != COLLECT_VAL && c != EXIT_CLOSED_VAL && c != '\n')
+		return (INCORRECT);
+	return (CORRECT);
 }
