@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:30:43 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 16:00:43 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:36:13 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_verify_walls(char **map)
 int	ft_verify_maplength(char **map)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	while (map[i])
@@ -72,13 +72,56 @@ int	ft_verify_maplength(char **map)
 	return (CORRECT);
 }
 
+int	ft_verify_content(char **map)
+{
+	t_pos	pos;
+	int		nb_hero;
+	int		nb_exit;
+
+	pos.y = 0;
+	nb_exit = 1;
+	nb_hero = 1;
+	while (map[pos.y])
+	{
+		pos.x = 0;
+		while (map[pos.y][pos.x])
+		{
+			if (map[pos.y][pos.x] == HERO_VAL)
+				nb_hero--;
+			if (map[pos.y][pos.x] == EXIT_CLOSED_VAL)
+				nb_exit--;
+			if (!ft_valid_value(map[pos.y][pos.x]))
+				return (INCORRECT);
+			pos.x++;
+		}
+		pos.y++;
+	}
+	if (nb_exit != 0 || nb_hero != 0)
+		return (INCORRECT);
+	return (CORRECT);
+}
+
 int	ft_verify_map(char **map)
 {
-	int	nb_collect;
+	t_verify	verif;	
+	t_pos		pos;
+	int			nb_collect;
 
+	ft_bzero(&verif, sizeof(verif));
 	nb_collect = ft_count_collectible(map);
 	if (ft_verify_maplength(map) && nb_collect > 0
-			/*&& ft_verify_content(map)*/ && ft_verify_walls(map))
-		return (CORRECT);
+		&& ft_verify_content(map) && ft_verify_walls(map))
+	{
+		pos = ft_find_hero(map);
+		verif.map = ft_array_copy(map);
+		ft_flood_fill(&verif, pos.x, pos.y);
+		if (verif.hero_count == 1 && verif.exit_count == 1
+			&& verif.collect_count == nb_collect)
+		{
+			verif.map = ft_clear_array(verif.map);
+			return (CORRECT);
+		}
+		verif.map = ft_clear_array(verif.map);
+	}
 	return (INCORRECT);
 }
