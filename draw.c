@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:18:21 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/25 15:57:51 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:08:01 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_map_draw(t_data *game)
 	}
 	if (BONUS)
 		game->images.count = mlx_put_string(game->mlx, "0", \
-			ft_get_width(game->map) * SPRITE_SIZE * 0.3, 21);
+			ft_get_width(game->map) * SPRITE_SIZE * 0.33, 21);
 	ft_draw_nonconcurrent(game, game->x_hero, game->y_hero, game->images.hero);
 }
 
