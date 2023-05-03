@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:30:43 by brheaume          #+#    #+#             */
-/*   Updated: 2023/04/28 10:36:13 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:59:16 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,23 @@ int	ft_verify_maplength(char **map)
 	int	len;
 
 	i = 0;
-	while (map[i])
+	if (map)
 	{
-		len = ft_strlen(map[i]) - 1;
-		if (i > MAP_HEIGHT_MAX)
-			return (INCORRECT);
-		if (len > MAP_WIDTH_MAX)
-			return (INCORRECT);
-		if (len != ft_get_width(map))
-			return (INCORRECT);
-		i++;
+		while (map[i])
+		{
+			len = ft_strlen(map[i]) - 1;
+			if (i > MAP_HEIGHT_MAX)
+				return (INCORRECT);
+			if (len > MAP_WIDTH_MAX)
+				return (INCORRECT);
+			if (len != ft_get_width(map))
+				return (INCORRECT);
+			i++;
+		}
+		if (i >= 3)
+			return (CORRECT);
 	}
-	return (CORRECT);
+	return (INCORRECT);
 }
 
 int	ft_verify_content(char **map)

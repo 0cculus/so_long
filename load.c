@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:03:24 by brheaume          #+#    #+#             */
-/*   Updated: 2023/05/01 10:22:05 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:56:15 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	**ft_loadmap(char *path)
 		}
 		added = ft_xfree(added);
 		close(ffs);
+		if (!res)
+			ft_error_simple("Invalid file");
 		return (res);
 	}
 	return (NULL);

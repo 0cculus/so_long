@@ -6,7 +6,7 @@
 /*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 16:26:20 by brheaume          #+#    #+#             */
-/*   Updated: 2023/05/01 10:19:31 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:57:28 by brheaume         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_error_simple(char *message)
 void	ft_error_map(char **map)
 {
 	ft_clear_array(map);
-	ft_putendl_fd("Error\nInvalid map content\n", ERROR_OUTPUT);
+	ft_putendl_fd("Error\nInvalid map content", ERROR_OUTPUT);
 	exit(EXIT_FAILURE);
 }
 
